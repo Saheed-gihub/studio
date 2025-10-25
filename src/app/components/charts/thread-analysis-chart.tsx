@@ -42,18 +42,20 @@ export function ThreadAnalysisChart() {
         />
       )}
       <div className="absolute inset-0">
-        <ResponsiveContainer width="100%" height="100%">
-          <LineChart data={threatData} margin={{ top: 20, right: 30, left: 0, bottom: 10 }}>
-            <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border) / 0.5)" />
-            <XAxis dataKey="time" stroke="#888888" fontSize={12} tickLine={false} axisLine={false} />
-            <YAxis stroke="#888888" fontSize={12} tickLine={false} axisLine={false} />
-            <Tooltip
-              content={<ChartTooltipContent />}
-              cursor={{ fill: "hsl(var(--accent) / 0.1)" }}
-            />
-            <Line type="monotone" dataKey="anomalyScore" stroke="hsl(var(--accent))" strokeWidth={3} />
-          </LineChart>
-        </ResponsiveContainer>
+        <ChartContainer config={chartConfig} className="h-full w-full">
+            <ResponsiveContainer width="100%" height="100%">
+            <LineChart data={threatData} margin={{ top: 20, right: 30, left: 0, bottom: 10 }}>
+                <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border) / 0.5)" />
+                <XAxis dataKey="time" stroke="#888888" fontSize={12} tickLine={false} axisLine={false} />
+                <YAxis stroke="#888888" fontSize={12} tickLine={false} axisLine={false} />
+                <Tooltip
+                content={<ChartTooltipContent />}
+                cursor={{ fill: "hsl(var(--accent) / 0.1)" }}
+                />
+                <Line type="monotone" dataKey="anomalyScore" stroke="hsl(var(--accent))" strokeWidth={3} />
+            </LineChart>
+            </ResponsiveContainer>
+        </ChartContainer>
       </div>
     </div>
   );

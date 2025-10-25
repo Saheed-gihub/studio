@@ -59,7 +59,7 @@ export const useSensorData = () => {
       return;
     }
 
-    const sensorDataRef = ref(db, 'sensor_data');
+    const sensorDataRef = ref(db, 'sensor_logs');
     const listener = onValue(
       sensorDataRef,
       (snapshot) => {
@@ -87,7 +87,7 @@ export const useSensorData = () => {
 
   const resetData = useCallback(async () => {
     if (!db) return;
-    const sensorDataRef = ref(db, 'sensor_data');
+    const sensorDataRef = ref(db, 'sensor_logs');
     await set(sensorDataRef, null);
   }, [db]);
 

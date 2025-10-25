@@ -8,7 +8,7 @@ import type { SensorData } from '@/lib/types';
 import { AppHeader } from './header';
 import { LatestReadings } from './latest-readings';
 import { CombinedChart } from './charts/combined-chart';
-import { ThreadAnalysisChart } from './charts/thread-analysis-chart';
+import { DataSummary } from './data-summary';
 import { DataTable } from './data-table';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
@@ -109,21 +109,14 @@ export default function Dashboard() {
             </CardContent>
           </Card>
           
+          <DataSummary data={filteredData} />
+
           <Card className="rounded-3xl lg:col-span-2">
             <CardHeader>
               <CardTitle className="font-headline">All Readings</CardTitle>
             </CardHeader>
             <CardContent>
               <DataTable data={filteredData} />
-            </CardContent>
-          </Card>
-
-           <Card className="rounded-3xl lg:col-span-2">
-            <CardHeader>
-              <CardTitle className="font-headline">Threat Analysis</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <ThreadAnalysisChart />
             </CardContent>
           </Card>
         </div>

@@ -7,8 +7,7 @@ import { useSensorData } from '@/lib/hooks/use-sensor-data';
 import type { SensorData } from '@/lib/types';
 import { AppHeader } from './header';
 import { LatestReadings } from './latest-readings';
-import { MoistureChart } from './charts/moisture-chart';
-import { TempHumidityChart } from './charts/temp-humidity-chart';
+import { CombinedChart } from './charts/combined-chart';
 import { ThreadAnalysisChart } from './charts/thread-analysis-chart';
 import { DataTable } from './data-table';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -100,23 +99,13 @@ export default function Dashboard() {
         <LatestReadings latestReading={latestReading} />
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
-          <Card className="rounded-3xl">
+          <Card className="rounded-3xl lg:col-span-2">
             <CardHeader className="flex flex-row items-center justify-between">
-              <CardTitle className="font-headline">Soil Moisture</CardTitle>
+              <CardTitle className="font-headline">Sensor Readings</CardTitle>
               <ChartControls count={readingsCount} setCount={setReadingsCount} />
             </CardHeader>
             <CardContent>
-              <MoistureChart data={chartData} />
-            </CardContent>
-          </Card>
-
-          <Card className="rounded-3xl">
-            <CardHeader className="flex flex-row items-center justify-between">
-              <CardTitle className="font-headline">Temp & Humidity</CardTitle>
-              <ChartControls count={readingsCount} setCount={setReadingsCount} />
-            </CardHeader>
-            <CardContent>
-              <TempHumidityChart data={chartData} />
+              <CombinedChart data={chartData} />
             </CardContent>
           </Card>
           

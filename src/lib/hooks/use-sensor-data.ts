@@ -15,36 +15,15 @@ import { initializeDb } from '@/lib/firebase';
 type ConnectionStatus = 'disconnected' | 'connecting' | 'connected' | 'error';
 
 export const useSensorData = () => {
-  const [dbUrl, setDbUrlState] = useState<string | null>(null);
   const [db, setDb] = useState<Database | null>(null);
   const [data, setData] = useState<SensorData[]>([]);
   const [latestReading, setLatestReading] = useState<SensorData | null>(null);
   const [status, setStatus] = useState<ConnectionStatus>('disconnected');
 
   useEffect(() => {
-    const storedDbUrl = localStorage.getItem('firebaseDbUrl');
-    if (storedDbUrl) {
-      setDbUrlState(storedDbUrl);
-    }
-  }, []);
-
-  const setDbUrl = useCallback((url: string) => {
-    localStorage.setItem('firebaseDbUrl', url);
-    setDbUrlState(url);
-  }, []);
-
-  useEffect(() => {
-    if (!dbUrl) {
-      setStatus('disconnected');
-      setData([]);
-      setLatestReading(null);
-      setDb(null);
-      return;
-    }
-
     try {
       setStatus('connecting');
-      const database = initializeDb(dbUrl);
+      const database = initializeDb();
       setDb(database);
       setStatus('connected');
     } catch (error) {
@@ -52,7 +31,7 @@ export const useSensorData = () => {
       setStatus('error');
       setDb(null);
     }
-  }, [dbUrl]);
+  }, []);
 
   useEffect(() => {
     if (status !== 'connected' || !db) {
@@ -108,5 +87,5 @@ export const useSensorData = () => {
     await set(sensorDataRef, null);
   }, [db]);
 
-  return { data, latestReading, status, dbUrl, setDbUrl, resetData, db };
+  return { data, latestReading, status, resetData, db };
 };

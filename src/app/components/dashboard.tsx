@@ -15,7 +15,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { useToast } from '@/hooks/use-toast';
 
 export default function Dashboard() {
-  const { data, latestReading, status, dbUrl, setDbUrl, resetData } = useSensorData();
+  const { data, latestReading, status, resetData } = useSensorData();
   const { toast } = useToast();
 
   const [readingsCount, setReadingsCount] = useState<string>('50');
@@ -88,8 +88,6 @@ export default function Dashboard() {
     <div className="w-full">
       <AppHeader
         status={status}
-        dbUrl={dbUrl}
-        setDbUrl={setDbUrl}
         onReset={handleReset}
         onExport={handleExport}
         dateRange={dateRange}

@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { Database, Wifi, WifiOff, Trash2, Download, Calendar as CalendarIcon, Settings } from 'lucide-react';
+import { Database, Wifi, WifiOff, Trash2, Download, Calendar as CalendarIcon } from 'lucide-react';
 import { DateRange } from 'react-day-picker';
 import { format } from 'date-fns';
 
@@ -9,22 +9,19 @@ import { Button } from '@/components/ui/button';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Calendar } from '@/components/ui/calendar';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '@/components/ui/alert-dialog';
-import { FirebaseConfigDialog } from './firebase-config-dialog';
 import { cn } from '@/lib/utils';
 
 type ConnectionStatus = 'disconnected' | 'connecting' | 'connected' | 'error';
 
 interface AppHeaderProps {
   status: ConnectionStatus;
-  dbUrl: string | null;
-  setDbUrl: (url: string) => void;
   onReset: () => void;
   onExport: () => void;
   dateRange: DateRange | undefined;
   setDateRange: (range: DateRange | undefined) => void;
 }
 
-export function AppHeader({ status, dbUrl, setDbUrl, onReset, onExport, dateRange, setDateRange }: AppHeaderProps) {
+export function AppHeader({ status, onReset, onExport, dateRange, setDateRange }: AppHeaderProps) {
   const statusConfig = {
     disconnected: { icon: <WifiOff className="text-muted-foreground" />, text: 'Disconnected', color: 'bg-muted' },
     connecting: { icon: <Wifi className="text-blue-500 animate-pulse" />, text: 'Connecting', color: 'bg-blue-500' },
@@ -49,10 +46,6 @@ export function AppHeader({ status, dbUrl, setDbUrl, onReset, onExport, dateRang
           </div>
       </div>
       <div className="mt-6 flex flex-wrap gap-2">
-          <FirebaseConfigDialog dbUrl={dbUrl} setDbUrl={setDbUrl}>
-            <Button variant="outline"><Settings className="mr-2 h-4 w-4" />Connection</Button>
-          </FirebaseConfigDialog>
-
           <Popover>
             <PopoverTrigger asChild>
               <Button

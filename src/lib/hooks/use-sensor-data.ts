@@ -65,10 +65,27 @@ export const useSensorData = () => {
       (snapshot) => {
         if (snapshot.exists()) {
           const rawData = snapshot.val();
-          const dataArray: SensorData[] = Object.values(rawData);
-          dataArray.sort((a, b) => b.timestamp - a.timestamp);
-          setData(dataArray);
-          setLatestReading(dataArray[0] || null);
+          
+          let dataArray: SensorData[];
+          if (Array.isArray(rawData)) {
+            // If it's already an array (less common for Firebase RTDB)
+            dataArray = rawData;
+          } else if (typeof rawData === 'object' && rawData !== null) {
+            // If it's an object of objects
+            dataArray = Object.values(rawData);
+          } else {
+            // If it's a single object (or something else unexpected)
+            dataArray = [rawData];
+          }
+
+          if(dataArray.length > 0 && dataArray[0]) {
+            dataArray.sort((a, b) => b.timestamp - a.timestamp);
+            setData(dataArray);
+            setLatestReading(dataArray[0] || null);
+          } else {
+            setData([]);
+            setLatestReading(null);
+          }
         } else {
           setData([]);
           setLatestReading(null);
